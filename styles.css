@@ -109,6 +109,10 @@ h1, h2, h3, h4, h5, h6 {
     outline: inherit;
 }
 
+.app__card-button:hover {
+    font-weight: 500;
+}
+
 .app__card-button.active {
     border-radius: 0.8rem;
     background: var(--azul-royal);
