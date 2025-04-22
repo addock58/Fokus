@@ -1,5 +1,7 @@
 const html = document.querySelector('html')
 const banner = document.querySelector('.app__image')
+const musica = new Audio('./assets/aud/luna-rise-part-one.mp3')
+musica.loop = true
 
 //Adicionando o evento de clique no botão de foco, curto e longo
 document.querySelectorAll('.app__card-button').forEach(btn => {
@@ -7,6 +9,16 @@ document.querySelectorAll('.app__card-button').forEach(btn => {
         alterContext(btn.getAttribute('data-contexto'))
         activeBtn(btn)
     })
+})
+
+//Adicionando o evento ativar musica de fundo
+document.getElementById('alternar-musica').addEventListener('change', () => {
+    if (musica.paused) {
+        musica.play()
+    }
+    else {
+        musica.pause()
+    }
 })
 
 function alterContext (contexto) {
