@@ -7,7 +7,7 @@ const audioPlay = new Audio('./assets/aud/play.wav')
 const audioPause = new Audio('./assets/aud/pause.mp3')
 const audioFim = new Audio('./assets/aud/beep.mp3')
 
-let tempoEmSegundos = 5
+let tempoEmSegundos = 1500 // 25 minutos
 let intervalo = null
 
 
@@ -40,18 +40,20 @@ function alterContext (contexto) {
         case "foco":
             titulo.innerHTML = `Otimize sua produtividade,<br>
                 <strong class="app__title-strong">mergulhe no que importa.</strong>`
-            
+            tempoEmSegundos = 1500 // 25 minutos
+            showTemporizador()
             break;
         case 'descanso-curto':
             titulo.innerHTML = `Que tal dar uma respirada?<br>
                 <strong class="app__title-strong">Faça uma pausa curta!</strong>`
-            
+            tempoEmSegundos = 300 // 5 minutos
+            showTemporizador()
             break;
         case 'descanso-longo':
             titulo.innerHTML = `Hora de voltar à superfície.<br>
                 <strong class="app__title-strong">Faça uma pausa longa.</strong>`
-    
-        default:
+            tempoEmSegundos = 900 // 15 minutos
+            showTemporizador()
             break;
     }
 }
@@ -83,7 +85,8 @@ function temporizador () {
             return
         }
         tempoEmSegundos -= 1
-        console.log(tempoEmSegundos)}, 1000)
+        showTemporizador()
+}, 1000)
 }
 
 function zerarIntervalo () {
@@ -113,3 +116,10 @@ function play_pause (value) {
             break;
     }
 }
+
+function showTemporizador () {
+    const tempo = new Date(tempoEmSegundos * 1000).toLocaleTimeString('pt-BR', {minute: '2-digit', second: '2-digit'})
+    document.getElementById('timer').innerHTML = `${tempo}`
+}
+
+showTemporizador()
