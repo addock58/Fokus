@@ -1,6 +1,16 @@
 const html = document.querySelector('html')
 const banner = document.querySelector('.app__image')
+const btn_startPause = document.getElementById('start-pause')
+
 const musica = new Audio('./assets/aud/luna-rise-part-one.mp3')
+const audioPlay = new Audio('./assets/aud/play.wav')
+const audioPause = new Audio('./assets/aud/pause.mp3')
+const audioFim = new Audio('./assets/aud/beep.mp3')
+
+let tempoEmSegundos = 5
+let intervalo = null
+
+
 musica.loop = true
 
 //Adicionando o evento de clique no botão de foco, curto e longo
@@ -54,3 +64,52 @@ function activeBtn (button) {
     button.classList.add('active')
 }
 
+// Adicionando o evento de clique no botão de iniciar/pausar temporizador
+btn_startPause.addEventListener('click', temporizador)
+
+function temporizador () {
+    if (intervalo) {
+        zerarIntervalo()
+        play_pause('pause')
+        return
+    } else {
+        play_pause('play')
+    }
+    intervalo = setInterval(() => {
+        if (tempoEmSegundos <= 0) {
+            play_pause('stop')
+            alert('O tempo acabou!')
+            zerarIntervalo()
+            return
+        }
+        tempoEmSegundos -= 1
+        console.log(tempoEmSegundos)}, 1000)
+}
+
+function zerarIntervalo () {
+    clearInterval(intervalo)
+    intervalo = null
+}
+
+function play_pause (value) {
+    const spamBtn = btn_startPause.querySelector('span')
+    const imgBtn = btn_startPause.querySelector('img')
+
+    switch (value) {
+        case 'play':
+            spamBtn.textContent = 'Pausar'
+            imgBtn.setAttribute('src', './assets/img/pause.png')
+            audioPlay.play()
+            break;
+        case 'pause':
+            spamBtn.textContent = 'Continuar'
+            imgBtn.setAttribute('src', './assets/img/play_arrow.png')
+            audioPause.play()
+            break;
+        case 'stop':
+            spamBtn.textContent = 'Começar'
+            imgBtn.setAttribute('src', './assets/img/play_arrow.png')
+            // audioFim.play()
+            break;
+    }
+}
